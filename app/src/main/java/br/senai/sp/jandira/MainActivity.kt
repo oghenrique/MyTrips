@@ -3,6 +3,7 @@ package br.senai.sp.jandira
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -97,9 +99,18 @@ fun Greeting() {
                     value = "",
                     onValueChange = {},
                     label = {
-                        Text(text = "Email",
-                            color = Color.Black
-                        )
+                        Row {
+                            Image(
+                                painterResource(id = R.drawable.email ),
+                                contentDescription = "",
+                                modifier = Modifier
+                                    .width(20.dp)
+                                    )
+                            Text(text = "  Email",
+                                color = Color.Black
+                            )
+                        }
+
                     },
                     colors = OutlinedTextFieldDefaults.colors(
                         unfocusedBorderColor = Color(0xFFCF06F0),
@@ -119,9 +130,17 @@ fun Greeting() {
                     value = "",
                     onValueChange = {},
                     label = {
-                        Text(text = "Password",
-                            color = Color.Black
-                        )
+                        Row {
+                            Image(
+                                painterResource(id = R.drawable.cadeadoo ),
+                                contentDescription = "",
+                                modifier = Modifier
+                                    .width(20.dp)
+                            )
+                            Text(text = "  Password",
+                                color = Color.Black
+                            )
+                        }
                     },
                     colors = OutlinedTextFieldDefaults.colors(
                         unfocusedBorderColor = Color(0xFFCF06F0),
@@ -156,11 +175,15 @@ fun Greeting() {
                     )
 
                 ){
-                    Text(
-                        text = "SIGN IN",
-                        fontSize = 18.sp,
-                        color = Color.White
-                    )
+                    Row {
+                        Text(
+                            text = "SIGN IN   ",
+                            fontSize = 18.sp,
+                            color = Color.White
+                        )
+                        Image(painterResource(id = R.drawable.seta),
+                            contentDescription = "")
+                    }
                 }
                 Row(
                     modifier = Modifier
@@ -205,8 +228,11 @@ fun Greeting() {
 @Composable
 fun Tela2(){
     Surface(
-
+        modifier = Modifier
+            .fillMaxSize(),
+        color = Color.White
     ){
+        
 
     }
 }
