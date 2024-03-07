@@ -24,6 +24,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -32,6 +33,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Shape
@@ -53,7 +55,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting()
+                    TelaSp()
                 }
             }
         }
@@ -241,7 +243,7 @@ fun Greeting() {
 
 
 @Composable
-fun Tela2() {
+fun TelaSp() {
     Surface(
         modifier = Modifier
             .fillMaxSize(),
@@ -294,6 +296,11 @@ fun Tela2() {
                         .padding(top = 25.dp)
                         .width(100.dp)
                         .height(100.dp)
+                        .border(
+                            width = 1.dp,
+                            color = Color(0xFFCF06F0),
+                            shape = RoundedCornerShape(100.dp)
+                        )
 
                 ) {
                     Image(
@@ -303,7 +310,16 @@ fun Tela2() {
                         contentDescription = "Imagem de um homem sorrindo",
                         contentScale = ContentScale.Crop
                     )
+
                 }
+
+                Image(
+                    painterResource(
+                        id = R.drawable.camera),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .offset(y = -20.dp, x = 35.dp )
+                )
 
             }
             Column(
@@ -440,6 +456,10 @@ fun Tela2() {
                     Checkbox(
                         checked = false,
                         onCheckedChange = {},
+                        colors = CheckboxDefaults.colors(
+                            checkedColor = Color(0xFFCF06F0),
+                            uncheckedColor = Color(0xFFCF06F0)
+                        )
                     )
                     Text(text = "Over 18?")
                 }
@@ -472,7 +492,7 @@ fun Tela2() {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                    ){
+                    ) {
                         Text(
                             text = "SIGN IN   ",
                             fontSize = 18.sp,
@@ -536,6 +556,6 @@ fun GreetingPreview() {
 @Composable
 fun Tela2Preview() {
     MyTripsTheme {
-        Tela2()
+        TelaSp()
     }
 }
