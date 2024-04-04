@@ -50,7 +50,18 @@ import br.senai.sp.jandira.R
 @Composable
 fun TelaHome(controleDeNavegacao: NavHostController) {
 
-    
+    data class Viagem(
+        val imagemId: Int,
+        val titulo: String,
+        val descricao: String,
+        val data: String
+    )
+
+    val viagens = listOf(
+        Viagem(R.drawable.londres, "London, 2019", "London is the capital and largest city of the United Kingdom, with a population of just under 9 million.", "18 Feb - 21 Feb"),
+        Viagem(R.drawable.porto, "Porto, 2022", "Porto is the second city in Portugal, the capital of the Oporto District.", "10 Mar - 15 Mar"),
+    )
+
 
     var searchState = remember {
         mutableStateOf("")
@@ -238,7 +249,7 @@ fun TelaHome(controleDeNavegacao: NavHostController) {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    items(3) {
+                    items(viagens.size) {
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -250,8 +261,8 @@ fun TelaHome(controleDeNavegacao: NavHostController) {
                                 )
                         ) {
                             Image(
-                                painterResource(id = R.drawable.londres),
-                                contentDescription = "Paisagem de londres",
+                                painterResource(id = viagens[it].imagemId),
+                                contentDescription = viagens[it].titulo,
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -266,7 +277,7 @@ fun TelaHome(controleDeNavegacao: NavHostController) {
                                     modifier = Modifier
                                         .padding( bottom = 10.dp)
                                 ) {
-                                    Text(text = "London, 2019",
+                                    Text(text = viagens[it].titulo,
                                         color = Color(0xFFCF06F0)
                                     )
                                 }
@@ -274,7 +285,7 @@ fun TelaHome(controleDeNavegacao: NavHostController) {
                                     modifier = Modifier
                                         .padding( bottom = 10.dp)
                                 ) {
-                                    Text(text = "London is the capital and largest city of  the United Kingdom, with a population of just under 9 million.",
+                                    Text(text = viagens[it].descricao,
                                         fontSize = 14.sp,
                                         color = Color(0xffA09C9C)
                                     )
@@ -285,7 +296,7 @@ fun TelaHome(controleDeNavegacao: NavHostController) {
                                         .padding(end = 10.dp),
                                     horizontalArrangement = Arrangement.End
                                 ) {
-                                    Text(text = "18 Feb - 21 Feb",
+                                    Text(text = viagens[it].data,
                                         color = Color(0xFFCF06F0),
                                         fontSize = 12.sp
                                     )
