@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,16 +21,19 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,6 +51,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import br.senai.sp.jandira.R
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TelaHome(controleDeNavegacao: NavHostController) {
 
@@ -62,251 +67,279 @@ fun TelaHome(controleDeNavegacao: NavHostController) {
         Viagem(R.drawable.porto, "Porto, 2022", "Porto is the second city in Portugal, the capital of the Oporto District.", "10 Mar - 15 Mar"),
     )
 
+    data class Categoria(
+        val imagemId: Int,
+        val titulo: String
+    )
+
+    val categorias = listOf(
+        Categoria(R.drawable.montanha, "Montain"),
+        Categoria(R.drawable.snow, "Snow"),
+        Categoria(R.drawable.beach, "Beach")
+
+    )
+
 
     var searchState = remember {
         mutableStateOf("")
     }
 
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color(0xffF6F6F6)
-    ) {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(onClick = {},
+                shape = CircleShape,
+                containerColor = Color(0xFFCF06F0),
+                contentColor = Color.White
             ) {
-                Image(
-                    painterResource(id = R.drawable.paris),
-                    contentDescription = "Paris",
-                    contentScale = ContentScale.Crop,
+                Icon(Icons.Default.Add, contentDescription = "Add")
+            }
+        }
+    ) {
+
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = Color(0xffF6F6F6)
+        ) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp)
-                )
-                Column(
-                    horizontalAlignment = Alignment.End
                 ) {
-                    Card(
-                        modifier = Modifier
-                            .padding(10.dp)
-                            .size(60.dp),
-                        shape = CircleShape,
-                        border = BorderStroke(2.dp, Color.White)
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.photo),
-                            contentDescription = "Foto de Perfil",
-                            contentScale = ContentScale.Crop,
-                        )
-                    }
-
-                    Row(
-                        horizontalArrangement = Arrangement.End,
+                    Image(
+                        painterResource(id = R.drawable.paris),
+                        contentDescription = "Paris",
+                        contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(end = 10.dp),
+                            .height(200.dp)
+                    )
+                    Column(
+                        horizontalAlignment = Alignment.End
                     ) {
-                        Text(
-                            text = "Gustavo Henrique",
-                            color = Color.White
-                        )
+                        Card(
+                            modifier = Modifier
+                                .padding(10.dp)
+                                .size(60.dp),
+                            shape = CircleShape,
+                            border = BorderStroke(2.dp, Color.White)
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.photo),
+                                contentDescription = "Foto de Perfil",
+                                contentScale = ContentScale.Crop,
+                            )
+                        }
+
+                        Row(
+                            horizontalArrangement = Arrangement.End,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(end = 10.dp),
+                        ) {
+                            Text(
+                                text = "Gustavo Henrique",
+                                color = Color.White
+                            )
+                        }
+                    }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .padding(start = 20.dp, bottom = 10.dp),
+                        verticalArrangement = Arrangement.Bottom
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.LocationOn,
+                                contentDescription = "Localização",
+                                tint = Color.White,
+                                modifier = Modifier
+                                    .size(20.dp)
+                            )
+                            Text(
+                                text = "You're in Paris",
+                                color = Color.White
+                            )
+                        }
+
+                        Row(
+                            modifier = Modifier.padding(start = 6.dp)
+                        ) {
+                            Text(
+                                text = "My Trips",
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White,
+                                fontSize = 24.sp
+                            )
+                        }
                     }
                 }
                 Column(
                     modifier = Modifier
-                        .fillMaxHeight()
-                        .padding(start = 20.dp, bottom = 10.dp),
-                    verticalArrangement = Arrangement.Bottom
+                        .fillMaxWidth()
+                        .height(150.dp)
+                        .padding(top = 20.dp, start = 20.dp)
                 ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.LocationOn,
-                            contentDescription = "Localização",
-                            tint = Color.White,
-                            modifier = Modifier
-                                .size(20.dp)
-                        )
-                        Text(
-                            text = "You're in Paris",
-                            color = Color.White
-                        )
+                    Row {
+                        Text(text = "Categories")
                     }
 
-                    Row(
-                        modifier = Modifier.padding(start = 6.dp)
+                    Spacer(modifier = Modifier.height(10.dp))
+                    LazyRow(
+                        modifier = Modifier.fillMaxSize()
                     ) {
-                        Text(
-                            text = "My Trips",
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White,
-                            fontSize = 24.sp
-                        )
-                    }
-                }
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(150.dp)
-                    .padding(top = 20.dp, start = 20.dp)
-            ) {
-                Row {
-                    Text(text = "Categories")
-                }
-
-                Spacer(modifier = Modifier.height(10.dp))
-                LazyRow(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    items(5) {
-                        Button(
-                            onClick = {},
-                            shape = RoundedCornerShape(10.dp),
-                            colors = ButtonDefaults
-                                .buttonColors(
-                                    containerColor = Color(0xFFCF06F0)
-                                ),
-                            modifier = Modifier
-                                .height(80.dp)
-                                .width(120.dp),
-                        ) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally
+                        items(categorias.size) {
+                            Button(
+                                onClick = {},
+                                shape = RoundedCornerShape(10.dp),
+                                colors = ButtonDefaults
+                                    .buttonColors(
+                                        containerColor = Color(0xFFCF06F0)
+                                    ),
+                                modifier = Modifier
+                                    .height(80.dp)
+                                    .width(120.dp),
                             ) {
-                                Row {
-                                    Image(
-                                        painterResource(id = R.drawable.montanha) ,
-                                        contentDescription = "Montanhas",
-                                        modifier = Modifier
-                                            .size(30.dp)
-                                    )
-                                }
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Row {
+                                        Image(
+                                            painterResource(id = categorias[it].imagemId) ,
+                                            contentDescription = "Montanhas",
+                                            modifier = Modifier
+                                                .size(30.dp)
+                                        )
+                                    }
 
-                                Row {
-                                    Text(text = "Montain")
+                                    Row {
+                                        Text(text = categorias[it].titulo)
+                                    }
                                 }
                             }
+                            Spacer(modifier = Modifier.width(10.dp))
                         }
-                        Spacer(modifier = Modifier.width(10.dp))
                     }
                 }
-            }
-            Column(
-                modifier = Modifier
-                    .padding(16.dp)
-            ) {
-                OutlinedTextField(
-                    value = searchState.value,
-                    onValueChange = {
-                        searchState.value = it
-                    },
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            color = Color.White,
-                            shape = RoundedCornerShape(24.dp)
-                        ),
-                    trailingIcon = {
-                        IconButton(onClick = {
-
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.Search,
-                                contentDescription = "Search your destiny",
-                                tint = Color(0xffA09C9C)
-                            )
-                        }
-                    },
-                    placeholder = {
-                        Text(
-                            text = "Search your destiny",
-                            color = Color(0xffA09C9C)
-                        )
-                    },
-                    colors = OutlinedTextFieldDefaults.colors(
-                        unfocusedBorderColor = Color.White,
-                        focusedBorderColor = Color(0xF6DDD5D5)
-                    ),
-                    shape = RoundedCornerShape(24.dp)
-                )
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 20.dp, start = 20.dp, end = 20.dp)
-            ) {
-                Row {
-                    Text(text = "Past Trips")
-                }
-
-                Spacer(modifier = Modifier.height(10.dp))
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize()
+                        .padding(16.dp)
                 ) {
-                    items(viagens.size) {
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(250.dp)
-                                .shadow(10.dp),
-                            colors = CardDefaults
-                                .cardColors(
-                                    containerColor = Color.White
+                    OutlinedTextField(
+                        value = searchState.value,
+                        onValueChange = {
+                            searchState.value = it
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(
+                                color = Color.White,
+                                shape = RoundedCornerShape(24.dp)
+                            ),
+                        trailingIcon = {
+                            IconButton(onClick = {
+
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Default.Search,
+                                    contentDescription = "Search your destiny",
+                                    tint = Color(0xffA09C9C)
                                 )
-                        ) {
-                            Image(
-                                painterResource(id = viagens[it].imagemId),
-                                contentDescription = viagens[it].titulo,
-                                contentScale = ContentScale.Crop,
+                            }
+                        },
+                        placeholder = {
+                            Text(
+                                text = "Search your destiny",
+                                color = Color(0xffA09C9C)
+                            )
+                        },
+                        colors = OutlinedTextFieldDefaults.colors(
+                            unfocusedBorderColor = Color.White,
+                            focusedBorderColor = Color(0xF6DDD5D5)
+                        ),
+                        shape = RoundedCornerShape(24.dp)
+                    )
+                }
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = 20.dp, start = 20.dp, end = 20.dp)
+                ) {
+                    Row {
+                        Text(text = "Past Trips")
+                    }
+
+                    Spacer(modifier = Modifier.height(10.dp))
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        items(viagens.size) {
+                            Card(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(10.dp),
-                            )
-
-                            Column(
-                                modifier = Modifier
-                                    .padding(start = 10.dp)
+                                    .height(250.dp)
+                                    .shadow(10.dp),
+                                colors = CardDefaults
+                                    .cardColors(
+                                        containerColor = Color.White
+                                    )
                             ) {
-                                Row(
-                                    modifier = Modifier
-                                        .padding( bottom = 10.dp)
-                                ) {
-                                    Text(text = viagens[it].titulo,
-                                        color = Color(0xFFCF06F0)
-                                    )
-                                }
-                                Row(
-                                    modifier = Modifier
-                                        .padding( bottom = 10.dp)
-                                ) {
-                                    Text(text = viagens[it].descricao,
-                                        fontSize = 14.sp,
-                                        color = Color(0xffA09C9C)
-                                    )
-                                }
-                                Row(
+                                Image(
+                                    painterResource(id = viagens[it].imagemId),
+                                    contentDescription = viagens[it].titulo,
+                                    contentScale = ContentScale.Crop,
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(end = 10.dp),
-                                    horizontalArrangement = Arrangement.End
+                                        .padding(10.dp),
+                                )
+
+                                Column(
+                                    modifier = Modifier
+                                        .padding(start = 10.dp)
                                 ) {
-                                    Text(text = viagens[it].data,
-                                        color = Color(0xFFCF06F0),
-                                        fontSize = 12.sp
-                                    )
+                                    Row(
+                                        modifier = Modifier
+                                            .padding( bottom = 10.dp)
+                                    ) {
+                                        Text(text = viagens[it].titulo,
+                                            color = Color(0xFFCF06F0)
+                                        )
+                                    }
+                                    Row(
+                                        modifier = Modifier
+                                            .padding( bottom = 10.dp)
+                                    ) {
+                                        Text(text = viagens[it].descricao,
+                                            fontSize = 14.sp,
+                                            color = Color(0xffA09C9C)
+                                        )
+                                    }
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(end = 10.dp),
+                                        horizontalArrangement = Arrangement.End
+                                    ) {
+                                        Text(text = viagens[it].data,
+                                            color = Color(0xFFCF06F0),
+                                            fontSize = 12.sp
+                                        )
+                                    }
                                 }
                             }
+                            Spacer(modifier = Modifier.height(15.dp))
                         }
-                        Spacer(modifier = Modifier.height(15.dp))
                     }
                 }
             }
         }
     }
 }
+
+
+
