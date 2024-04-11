@@ -79,7 +79,6 @@ fun TelaHome(controleDeNavegacao: NavHostController) {
 
     )
 
-
     var searchState = remember {
         mutableStateOf("")
     }
