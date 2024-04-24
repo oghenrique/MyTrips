@@ -50,34 +50,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import br.senai.sp.jandira.R
+import br.senai.sp.jandira.repository.CategoriaRepository
+import br.senai.sp.jandira.repository.ViagemRepository
+import br.senai.sp.jandira.utils.encurtarData
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TelaHome(controleDeNavegacao: NavHostController) {
 
-    data class Viagem(
-        val imagemId: Int,
-        val titulo: String,
-        val descricao: String,
-        val data: String
-    )
+    val viagens = ViagemRepository().listarTodasAsViagens()
 
-    val viagens = listOf(
-        Viagem(R.drawable.londres, "London, 2019", "London is the capital and largest city of the United Kingdom, with a population of just under 9 million.", "18 Feb - 21 Feb"),
-        Viagem(R.drawable.porto, "Porto, 2022", "Porto is the second city in Portugal, the capital of the Oporto District.", "10 Mar - 15 Mar"),
-    )
-
-    data class Categoria(
-        val imagemId: Int,
-        val titulo: String
-    )
-
-    val categorias = listOf(
-        Categoria(R.drawable.montanha, "Montain"),
-        Categoria(R.drawable.snow, "Snow"),
-        Categoria(R.drawable.beach, "Beach")
-
-    )
+    val categorias = CategoriaRepository().listarTodasAsCategorias()
 
     var searchState = remember {
         mutableStateOf("")
@@ -209,15 +192,19 @@ fun TelaHome(controleDeNavegacao: NavHostController) {
                                 ) {
                                     Row {
                                         Image(
-                                            painterResource(id = categorias[it].imagemId) ,
-                                            contentDescription = "Montanhas",
+                                            painter =
+                                            if (categorias[it].imagem == null)
+                                                painterResource(id = R.drawable.no_image)
+                                            else
+                                                categorias[it].imagem!!,
+                                            contentDescription = "",
                                             modifier = Modifier
                                                 .size(30.dp)
                                         )
                                     }
 
                                     Row {
-                                        Text(text = categorias[it].titulo)
+                                        Text(text = categorias[it].categoria)
                                     }
                                 }
                             }
@@ -289,8 +276,12 @@ fun TelaHome(controleDeNavegacao: NavHostController) {
                                     )
                             ) {
                                 Image(
-                                    painterResource(id = viagens[it].imagemId),
-                                    contentDescription = viagens[it].titulo,
+                                    painter =
+                                    if (viagens[it].imagem == null)
+                                        painterResource(id = R.drawable.no_image)
+                                    else
+                                        viagens[it].imagem!!,
+                                    contentDescription = "",
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -305,7 +296,7 @@ fun TelaHome(controleDeNavegacao: NavHostController) {
                                         modifier = Modifier
                                             .padding( bottom = 10.dp)
                                     ) {
-                                        Text(text = viagens[it].titulo,
+                                        Text(text = "${viagens[it].destino}, ${viagens[it].dataChegada.year}",
                                             color = Color(0xFFCF06F0)
                                         )
                                     }
@@ -324,7 +315,7 @@ fun TelaHome(controleDeNavegacao: NavHostController) {
                                             .padding(end = 10.dp),
                                         horizontalArrangement = Arrangement.End
                                     ) {
-                                        Text(text = viagens[it].data,
+                                        Text(text = "${encurtarData(viagens[it].dataChegada)} - ${encurtarData(viagens[it].dataPartida)}",
                                             color = Color(0xFFCF06F0),
                                             fontSize = 12.sp
                                         )
