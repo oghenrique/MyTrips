@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -175,7 +176,7 @@ fun TelaHome(controleDeNavegacao: NavHostController) {
                     LazyRow(
                         modifier = Modifier.fillMaxSize()
                     ) {
-                        items(categorias.size) {
+                        items(categorias) {
                             Button(
                                 onClick = {},
                                 shape = RoundedCornerShape(10.dp),
@@ -193,10 +194,10 @@ fun TelaHome(controleDeNavegacao: NavHostController) {
                                     Row {
                                         Image(
                                             painter =
-                                            if (categorias[it].imagem == null)
+                                            if (it.imagem == null)
                                                 painterResource(id = R.drawable.no_image)
                                             else
-                                                categorias[it].imagem!!,
+                                               it.imagem!!,
                                             contentDescription = "",
                                             modifier = Modifier
                                                 .size(30.dp)
@@ -204,7 +205,7 @@ fun TelaHome(controleDeNavegacao: NavHostController) {
                                     }
 
                                     Row {
-                                        Text(text = categorias[it].categoria)
+                                        Text(text = it.categoria)
                                     }
                                 }
                             }
@@ -264,7 +265,7 @@ fun TelaHome(controleDeNavegacao: NavHostController) {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize()
                     ) {
-                        items(viagens.size) {
+                        items(viagens) {
                             Card(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -277,10 +278,10 @@ fun TelaHome(controleDeNavegacao: NavHostController) {
                             ) {
                                 Image(
                                     painter =
-                                    if (viagens[it].imagem == null)
+                                    if (it.imagem == null)
                                         painterResource(id = R.drawable.no_image)
                                     else
-                                        viagens[it].imagem!!,
+                                        it.imagem!!,
                                     contentDescription = "",
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
@@ -296,7 +297,7 @@ fun TelaHome(controleDeNavegacao: NavHostController) {
                                         modifier = Modifier
                                             .padding( bottom = 10.dp)
                                     ) {
-                                        Text(text = "${viagens[it].destino}, ${viagens[it].dataChegada.year}",
+                                        Text(text = "${it.destino}, ${it.dataChegada.year}",
                                             color = Color(0xFFCF06F0)
                                         )
                                     }
@@ -304,7 +305,7 @@ fun TelaHome(controleDeNavegacao: NavHostController) {
                                         modifier = Modifier
                                             .padding( bottom = 10.dp)
                                     ) {
-                                        Text(text = viagens[it].descricao,
+                                        Text(text = it.descricao,
                                             fontSize = 14.sp,
                                             color = Color(0xffA09C9C)
                                         )
@@ -315,7 +316,7 @@ fun TelaHome(controleDeNavegacao: NavHostController) {
                                             .padding(end = 10.dp),
                                         horizontalArrangement = Arrangement.End
                                     ) {
-                                        Text(text = "${encurtarData(viagens[it].dataChegada)} - ${encurtarData(viagens[it].dataPartida)}",
+                                        Text(text = "${encurtarData(it.dataChegada)} - ${encurtarData(it.dataPartida)}",
                                             color = Color(0xFFCF06F0),
                                             fontSize = 12.sp
                                         )
