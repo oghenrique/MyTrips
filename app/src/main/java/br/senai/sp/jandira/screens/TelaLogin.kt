@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -35,9 +36,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import br.senai.sp.jandira.R
+import br.senai.sp.jandira.repository.UsuarioRepository
 
 @Composable
 fun TelaLogin(controleDeNavegacao: NavHostController) {
+
+    val cr = UsuarioRepository(LocalContext.current)
 
     var emailState = remember {
         mutableStateOf("")
@@ -191,12 +195,14 @@ fun TelaLogin(controleDeNavegacao: NavHostController) {
             ) {
                 Button(
                     onClick = {
-                        if (emailState.value == "gustavo" && senhaState.value == "1234"){
-                            mensagemErroState.value = ""
-
-                            controleDeNavegacao.navigate("home")
+                        if (emailState.value == "" || senhaState.value == ""){
+                            mensagemErroState.value = "Email ou senhas incorretos"
                         } else {
-                            mensagemErroState.value = "Email ou senha incorretos"
+                            val usuario = cr.validaLogin(emailState.value, senhaState.value)
+
+                            if(usuario){
+                                controleDeNavegacao.navigate("home")
+                            }
                         }
                     },
                     colors = ButtonDefaults

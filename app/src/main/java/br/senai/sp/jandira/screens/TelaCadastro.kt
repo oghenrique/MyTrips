@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -41,9 +42,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import br.senai.sp.jandira.R
+import br.senai.sp.jandira.model.Usuario
+import br.senai.sp.jandira.repository.UsuarioRepository
 
 @Composable
 fun TelaCadastro(controleDeNavegacao: NavHostController) {
+
+    val cr = UsuarioRepository(LocalContext.current)
 
     var userState = remember {
         mutableStateOf("")
@@ -63,6 +68,10 @@ fun TelaCadastro(controleDeNavegacao: NavHostController) {
 
     var opcaoState = remember {
         mutableStateOf(true)
+    }
+
+    var mensagemErroState = remember {
+        mutableStateOf("")
     }
 
     Surface(
@@ -309,7 +318,24 @@ fun TelaCadastro(controleDeNavegacao: NavHostController) {
                 Button(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                              if (userState.value == "" || senhaState.value == "" || emailState.value == "" ||
+                                  phoneState.value == ""){
+                                  mensagemErroState.value = "Preencha todos os campos!"
+                              } else {
+                                  val usuario = Usuario (
+                                      nome = userState.value,
+                                      email = emailState.value,
+                                      telefone = phoneState.value,
+                                      isMaior = opcaoState.value,
+                                      senha =  senhaState.value
+                                  )
+
+                                  cr.salvar(usuario = usuario)
+                                  controleDeNavegacao.navigate("home")
+
+                              }
+                    },
                     colors = ButtonDefaults
                         .buttonColors(
                             containerColor = Color(0xFFCF06F0)
